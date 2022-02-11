@@ -6,9 +6,10 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.capstone.databinding.ActivityMainBinding
+import com.example.capstone.api.RetrofitLogin
+import com.example.capstone.data.login
+import com.example.capstone.databinding.LoginMainBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,20 +18,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
 
-    private var mBinding: ActivityMainBinding? = null
+    lateinit var binding : LoginMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login_main)
+        binding = LoginMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         var LoginId:EditText = findViewById(R.id.login_id)
         var LoginPw:EditText = findViewById(R.id.login_pw)
 
         val loginButton: Button = findViewById(R.id.login_loginbutton)
-        val registerButton: Button = findViewById(R.id.login_signupbutton)
 
-        registerButton.setOnClickListener {
-            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+        binding.loginSignupbutton.setOnClickListener {
+            val intent = Intent(this, Register2Activity::class.java)
             startActivity(intent)
         }
 
@@ -61,10 +62,9 @@ class LoginActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<login>, t: Throwable) {
                     Log.d("Login", "Fail")
+                    Toast.makeText(this@LoginActivity, "로그인 에러" , Toast.LENGTH_SHORT).show()
                 }
-
             })
-
         }
     }
 }

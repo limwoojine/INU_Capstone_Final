@@ -1,6 +1,6 @@
-package com.example.capstone
+package com.example.capstone.api
 
-import com.google.gson.JsonElement
+import com.example.capstone.data.store
 import retrofit2.Call
 import retrofit2.http.*
 

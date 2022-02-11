@@ -5,31 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFEFE"
-    tools:context=".MainActivity">
+    tools:context="com.example.capstone.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/logintoolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
         android:background="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         android:windowLightStatusBar="true"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:gravity="center_horizontal"
+            android:text="가게 리스트"
+            android:textColor="@color/black"
+            android:textSize="36sp"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:text="가게 리스트"
-        android:textColor="@color/black"
-        android:textSize="36sp"
-        app:layout_constraintTop_toBottomOf="@+id/logintoolbar" />
+
+
 
     <LinearLayout
         android:id="@+id/menu_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
         android:background="#FAF7F7"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">

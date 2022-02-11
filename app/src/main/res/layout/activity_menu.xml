@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".StoredetailActivity">
+    tools:context=".MenuActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,7 +16,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#E6CFCF">
 
             <ImageView
                 android:id="@+id/callimage"
@@ -44,8 +45,8 @@
                 android:id="@+id/store_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="124dp"
+                android:layout_marginTop="44dp"
+                android:layout_marginEnd="132dp"
                 android:text="010-1234-1234"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -66,4 +67,12 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/food_origin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="원산지" />
+
 </LinearLayout>
+

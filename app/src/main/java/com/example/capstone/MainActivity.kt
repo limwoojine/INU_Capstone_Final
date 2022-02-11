@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.capstone.api.RetrofitAPI
+import com.example.capstone.data.store
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,12 +23,6 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(findViewById(R.id.logintoolbar))
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        /*//val menu:ImageButton = findViewById(R.id.imageButton)
-
-        //menu.setOnClickListener {
-
-        }*/
 
         val retrofit = Retrofit.Builder()
             .baseUrl("http://da86-125-180-55-163.ngrok.io/")

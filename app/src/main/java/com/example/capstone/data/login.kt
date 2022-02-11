@@ -1,4 +1,4 @@
-package com.example.capstone
+package com.example.capstone.data
 
 data class login(
     val id : String,

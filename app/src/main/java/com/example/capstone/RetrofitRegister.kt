@@ -1,6 +1,6 @@
-package com.example.capstone.api
+package com.example.capstone
 
-import com.example.capstone.data.register
+import com.example.capstone.register
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -9,11 +9,10 @@ import retrofit2.http.POST
 interface RetrofitRegister {
 
     @FormUrlEncoded
-    @POST("register")
+    @POST("email")
     fun RequestRegister (
         @Field("id") id:String,
-        @Field("pw") pw:String,
-        @Field("nickname") nickname:String,
-        @Field("tel") tel:String) :  Call<register>
+        @Field("nickName") nickname:String,
+        @Field("pw") pw:String) : Call<register>
 
 }

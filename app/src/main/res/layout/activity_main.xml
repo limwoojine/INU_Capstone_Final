@@ -1,57 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFEFE"
+    android:orientation="vertical"
     tools:context="com.example.capstone.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/logintoolbar"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        android:windowLightStatusBar="true"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        tools:ignore="MissingConstraints"/>
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
-            android:gravity="center_horizontal"
-            android:text="가게 리스트"
-            android:textColor="@color/black"
-            android:textSize="36sp"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-
-
-    <LinearLayout
-        android:id="@+id/menu_bar"
+        android:id="@+id/loginToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:background="#FAF7F7"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:gravity="center_horizontal"
+        android:text="가게 리스트"
+        android:textColor="@color/black"
+        android:textSize="36sp" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/store_list"></androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/store_list">
+    </androidx.recyclerview.widget.RecyclerView>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

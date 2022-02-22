@@ -2,7 +2,6 @@ package com.example.capstone
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,11 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstone.data.Test
-import com.example.capstone.data.food
-import com.example.capstone.data.food_list
 
-class MenuAdapter(val context: Context, val foods: List<food>) : RecyclerView.Adapter<MenuAdapter.ViewHolder> () {
+class MenuAdapter(private val context: Context, private val foods: List<food>) : RecyclerView.Adapter<MenuAdapter.ViewHolder> () {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.activity_menu, parent, false)
@@ -50,7 +46,7 @@ class MenuAdapter(val context: Context, val foods: List<food>) : RecyclerView.Ad
         holder.menurating.text = items.rating
         holder.menuimg.setImageResource(R.drawable.ic_launcher_background)
 
-        holder.itemView.setOnClickListener {
+        /*holder.itemView.setOnClickListener {
             val reviews = arrayOf("리뷰 보기","리뷰 작성")
             var builder = AlertDialog.Builder(context)
                 .setTitle("ReView")
@@ -61,6 +57,6 @@ class MenuAdapter(val context: Context, val foods: List<food>) : RecyclerView.Ad
                     ContextCompat.startActivity(holder.itemView.context, intent, null)
                 }
                 .show()
-        }
+        }*/
     }
 }

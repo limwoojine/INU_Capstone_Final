@@ -5,20 +5,57 @@
     android:layout_height="match_parent"
     android:padding="15dp"
     android:orientation="vertical"
-    tools:context="com.example.capstone.Register2Activity">
+    tools:context=".RegisterActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="아이디"
         android:layout_marginTop="20dp"
-        android:textSize="18sp"/>
-    <EditText
-        android:id="@+id/regi_id"
+        android:text="아이디"
+        android:textSize="18sp" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="inu.ac.kr 이메일로 작성해주세요"
-        android:inputType="textEmailAddress"/>
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/regi_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="inu.ac.kr 이메일로 작성해주세요"
+            android:inputType="textEmailAddress" />
+
+        <Button
+            android:id="@+id/regi_emailButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="인증번호받기" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/regi_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="인증번호"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/regi_keyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="인증확인" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

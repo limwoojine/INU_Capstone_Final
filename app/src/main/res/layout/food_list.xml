@@ -71,8 +71,6 @@
                     android:text="5.0"
                     android:textSize="20sp" />
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

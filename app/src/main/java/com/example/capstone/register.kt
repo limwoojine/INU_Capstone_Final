@@ -3,15 +3,23 @@ package com.example.capstone
 import com.google.gson.annotations.SerializedName
 
 data class register(
-    val email: String,
-    val nickName: String,
-    val password: String,
+    @SerializedName("email") val email: String,
+    @SerializedName("nickName") val nickName: String,
+    @SerializedName("password") val password: String,
 )
 
-data class code(
-    val response: String
+data class emailResponse(
+    @SerializedName("response") val response: String
 )
 
 data class emailkey(
-    @SerializedName("email") var email: String
+    @SerializedName("email") val email: String
 )
+
+data class VerifyCode(
+    @SerializedName("code") val code: String
+)
+
+data class MemberResponse(
+    @SerializedName("id") val id: Int
+    )

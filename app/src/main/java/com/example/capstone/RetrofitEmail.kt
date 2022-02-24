@@ -2,13 +2,21 @@ package com.example.capstone
 
 import retrofit2.Call
 import retrofit2.http.*
+import java.lang.reflect.Member
 
 interface RetrofitEmail {
 
-    @FormUrlEncoded
     @POST("email")
-    //@Headers("accept: application/json",
-      //  "content-type: application/json")
-    fun requestKey(
-        @Field("email") param: String): Call<emailkey>
+    fun postEmail(
+        @Body jsonbody: emailkey): Call<emailResponse>
+
+    @POST("verifyCode/{email}")
+    fun postVerifyCode(
+        @Body jsonbody: VerifyCode, @Path("email") email: String
+    ): Call<emailResponse>
+
+    @POST("register")
+    fun registerMember(
+        @Body jsonbody: register
+    ): Call<MemberResponse>
 }

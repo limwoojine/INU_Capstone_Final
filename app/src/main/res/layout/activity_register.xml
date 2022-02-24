@@ -48,12 +48,6 @@
             android:hint="인증번호"
             android:inputType="textPersonName" />
 
-        <Button
-            android:id="@+id/regi_keyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="인증확인" />
     </LinearLayout>
 
     <TextView

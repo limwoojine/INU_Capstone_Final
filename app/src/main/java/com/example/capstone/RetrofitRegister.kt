@@ -10,7 +10,7 @@ interface RetrofitRegister {
 
     @FormUrlEncoded
     @POST("email")
-    fun RequestRegister (
+    fun requestRegister (
         @Field("id") id:String,
         @Field("nickName") nickname:String,
         @Field("pw") pw:String) : Call<register>

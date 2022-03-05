@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MenuActivity">
+    tools:context="com.example.capstone.MenuActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="420dp"
+        android:layout_height="224dp"
         android:layout_margin="20dp"
         android:layout_weight="1"
         android:background="#C38A5E">
@@ -57,16 +57,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_food"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="418dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/food_list" />
 
     <TextView
         android:id="@+id/food_origin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="132dp"
         android:layout_weight="1"
-        android:text="원산지" />
+        android:text="origin" />
 
 </LinearLayout>
 

@@ -1,13 +1,18 @@
 package com.example.capstone
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.capstone.databinding.ActivityLoginBinding
 import android.content.Intent
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
+import com.example.capstone.Login.App
+import com.example.capstone.Login.LoginViewModel
+import com.example.capstone.Retrofit.RetrofitLogin
+import com.example.capstone.data.LoginBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,13 +21,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
 
+    private val viewModel by viewModels<LoginViewModel>()
+
+    private lateinit var loginId : EditText
+    private lateinit var loginPw : EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_login)
 
-        var LoginId:EditText = findViewById(R.id.login_id)
-        var LoginPw:EditText = findViewById(R.id.login_pw)
+        loginId = findViewById(R.id.login_id)
+        loginPw = findViewById(R.id.login_pw)
 
         val loginButton: Button = findViewById(R.id.login_loginbutton)
         val registerButton: Button = findViewById(R.id.login_signupbutton)
@@ -31,41 +40,66 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://da86-125-180-55-163.ngrok.io/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        var loginService = retrofit.create(RetrofitLogin::class.java)
-
-
 
         loginButton.setOnClickListener {
-            val id:String = LoginId.text.toString()
-            val pw:String = LoginPw.text.toString()
-            val user = HashMap<String, String>()
-            user["id"] = id
-            user["pw"] = pw
-            loginService.requestLogin(user).enqueue(object: Callback<login> {
-                override fun onResponse(call: Call<login>, response: Response<login>) {
-                    if (response.body() != null) {
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        val error = response.errorBody()!!.string()
-                        if (error == "100") {
-                            Toast.makeText(this@LoginActivity, "가입되지 않은 사용자 입니다.",Toast.LENGTH_SHORT).show()
-                        } else if (error == "200") {
-                            Toast.makeText(this@LoginActivity, "잘못된 비밀번호 입니다.",Toast.LENGTH_SHORT).show()
-                        }
+            if(Utility.istNetworkConnected(this)) {
+                when {
+                    loginId.text.isEmpty() -> {
+                        showToastMsg(getString(R.string.login_empty_email))
+                        Utility.focusEditText(this,loginId)
+                    }
+                    loginPw.text.isEmpty() -> {
+                        showToastMsg(getString(R.string.login_empty_password))
+                        Utility.focusEditText(this,loginPw)
+                    }
+                    else -> {
+                        loginProcess()
                     }
                 }
-                override fun onFailure(call: Call<login>, t: Throwable) {
-                    Log.d("Login", "Fail")
-                    Toast.makeText(this@LoginActivity, "로그인 에러" , Toast.LENGTH_SHORT).show()
-                }
-            })
+            }
+
         }
     }
+    private fun loginProcess(){
+        viewModel.requestLogin(loginId.text.toString(), loginPw.text.toString())
+        viewModel.token.observe(this,
+            {
+                when (it) {
+                    "not registered email" -> {
+                        showToastMsg(getString(R.string.login_not_registered_email))
+                        Utility.focusEditText(this,loginId)
+                    }
+                    "incorrect password" -> {
+                        showToastMsg(getString(R.string.login_incorrect_password))
+                        Utility.focusEditText(this,loginPw)
+                    }
+                    "server error" -> {
+                        showToastMsg(getString(R.string.login_server_error))
+                    }
+                    else -> { //토큰을 정상적으로 받았을 때.
+                        App.prefs.token = it
+                        requestMemberInfo(it)
+                    }
+                }
+            })
+    }
+    private fun requestMemberInfo(token:String){
+        viewModel.requestMemberInfo(token)
+        viewModel.memberInfo.observe(
+            this,
+            {
+                App.memberInfo = it
+                App.nowLogin = true
+                showToastMsg("로그인 성공")
+                finish()
+            }
+        )
+    }
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, LoginActivity::class.java)
+        }
+    }
+    private fun showToastMsg(msg:String){ Toast.makeText(this,msg,Toast.LENGTH_SHORT).show() }
+
 }

@@ -1,14 +1,15 @@
-package com.example.capstone
+package com.example.capstone.Retrofit
 
+import com.example.capstone.data.*
 import retrofit2.Call
 import retrofit2.http.*
-import java.lang.reflect.Member
 
 interface RetrofitEmail {
 
     @POST("email")
     fun postEmail(
-        @Body jsonbody: emailkey): Call<emailResponse>
+        @Body jsonbody: emailkey
+    ): Call<emailResponse>
 
     @POST("verifyCode/{email}")
     fun postVerifyCode(

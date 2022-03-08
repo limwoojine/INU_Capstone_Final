@@ -4,6 +4,5 @@
     >
     <item
         android:id="@+id/menu_login"
-        android:title="로그인"
-        />
+        android:title="로그인"/>
 </menu>

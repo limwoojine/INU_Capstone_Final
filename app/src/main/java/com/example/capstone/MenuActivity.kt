@@ -74,7 +74,7 @@ class MenuActivity : AppCompatActivity() {
             })
     }
     private fun setMenuAdapter(menu: List<Food.food_list.FoodListDto>?) {
-        val mAdapter = MenuAdapter(menu!!)
+        val mAdapter = MenuAdapter(menu!!, this)
         recyclerView_menu.adapter = mAdapter
         recyclerView_menu.layoutManager = LinearLayoutManager(this)
         mAdapter.notifyDataSetChanged()

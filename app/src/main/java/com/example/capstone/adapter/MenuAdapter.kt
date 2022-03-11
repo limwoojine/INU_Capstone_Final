@@ -1,15 +1,21 @@
 package com.example.capstone.adapter
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.*
 import androidx.recyclerview.widget.RecyclerView
+import com.example.capstone.AllReviewActivity
 import com.example.capstone.R
+import com.example.capstone.ReviewActivity
 import com.example.capstone.data.Food
+import com.example.capstone.review.MyDialog
 
-class MenuAdapter(private val foods: List<Food.food_list.FoodListDto>) : RecyclerView.Adapter<MenuAdapter.ViewHolder> () {
+class MenuAdapter(private val foods: List<Food.food_list.FoodListDto>, private val context: Context) : RecyclerView.Adapter<MenuAdapter.ViewHolder> () {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater
@@ -40,6 +46,20 @@ class MenuAdapter(private val foods: List<Food.food_list.FoodListDto>) : Recycle
         holder.menuRating.text = 3.0.toString()
         holder.menuImg.setImageResource(R.drawable.ic_launcher_background)
 
+        holder.itemView.setOnClickListener {
+            val dialog = MyDialog(context)
+            dialog.myDig()
+            dialog.setButtonListener(object: MyDialog.SetButtonListener {
+                override fun readOnClicked() {
+                    val intent = Intent(holder.itemView?.context, AllReviewActivity::class.java)
+                    startActivity(holder.itemView.context, intent, null)
+                }
 
+                override fun writeOnClicked() {
+                    val intent = Intent(holder.itemView?.context, ReviewActivity::class.java)
+                    startActivity(holder.itemView.context, intent, null)
+                }
+            })
+        }
     }
 }

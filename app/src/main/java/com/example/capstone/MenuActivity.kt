@@ -1,5 +1,7 @@
 package com.example.capstone
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone.Retrofit.RetrofitMenu
 import com.example.capstone.adapter.MenuAdapter
-import com.example.capstone.data.Food
+import com.example.capstone.data.Menu
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,8 +20,8 @@ import kotlin.properties.Delegates
 
 class MenuActivity : AppCompatActivity() {
 
-    var menuList: Food.food_list? = null
-    var foodValue: List<Food.food_list.FoodListDto>? = null
+    var menuList: Menu? = null
+    var foodValue: Menu.Data? = null
 
     private lateinit var recyclerView_menu: RecyclerView
     private lateinit var storeName: TextView
@@ -35,10 +37,11 @@ class MenuActivity : AppCompatActivity() {
         storeNumber = findViewById(R.id.store_number)
         foodOrigin = findViewById(R.id.food_origin)
 
-        if (intent.hasExtra("id")) {
-            val storeId = intent?.getStringExtra("id")?.toInt()
+        val storeId = intent?.getStringExtra("id")?.toInt()
+        if (storeId != null) {
+            getMenuList(storeId)
         }
-        getMenuList(storeId)
+
 
     }
     private fun getMenuList(id: Int) {
@@ -51,33 +54,45 @@ class MenuActivity : AppCompatActivity() {
 
         retrofitService
             .requestFoodData(id)
-            .enqueue(object : Callback<Food.food_list> {
-                override fun onResponse(call: Call<Food.food_list>, response: Response<Food.food_list>) {
+            .enqueue(object : Callback<Menu> {
+                override fun onResponse(call: Call<Menu>, response: Response<Menu>) {
                     response.takeIf { it.isSuccessful }
                         ?.body()
                         ?.let { it ->
                             // do something
                             menuList = response.body()
-                            foodValue = menuList?.foodListDto
+                            foodValue = response.body()?.data
                             Log.d("메뉴 불러오기 성공!", response!!.body().toString())
+                            Log.d("메뉴 불러오기 성공!", foodValue.toString())
                             //인증한 adapter에 Member 데이터 넣기
-                            setMenuAdapter(foodValue)
-                            storeName.text = menuList?.name
-                            storeNumber.text = menuList?.phoneNumber
-                            foodOrigin.text = menuList?.foodOrigin
+                            setMenuAdapter(foodValue?.foodListDtoList)
+                            storeName.text = foodValue?.name
+                            storeNumber.text = foodValue?.phoneNumber
+                            foodOrigin.text = foodValue?.foodOrigin
+                            val callNumber: Int = replaceNumber(foodValue!!.phoneNumber)
+                            storeNumber.setOnClickListener {
+                                val myUri = Uri.parse("tel:0$callNumber")
+                                val intent = Intent(Intent.ACTION_DIAL, myUri)
+                                startActivity(intent)
+                            }
+
                         }
                 }
 
-                override fun onFailure(call: Call<Food.food_list>, t: Throwable) {
+                override fun onFailure(call: Call<Menu>, t: Throwable) {
                     Log.d("메뉴 통신 실패", "${t.message.toString()}")
                 }
             })
     }
-    private fun setMenuAdapter(menu: List<Food.food_list.FoodListDto>?) {
+    private fun setMenuAdapter(menu: List<Menu.Data.FoodListDto>?) {
         val mAdapter = MenuAdapter(menu!!, this)
         recyclerView_menu.adapter = mAdapter
         recyclerView_menu.layoutManager = LinearLayoutManager(this)
         mAdapter.notifyDataSetChanged()
         recyclerView_menu.setHasFixedSize(true)
+    }
+    private fun replaceNumber(number: String) : Int{
+        val callNumber = number.replace("-","")
+        return callNumber.toInt()
     }
 }

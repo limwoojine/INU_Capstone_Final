@@ -8,14 +8,12 @@
         android:id="@+id/dialog_readReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundcolor="#304E98"
         android:text="리뷰 보기" />
 
     <Button
         android:id="@+id/dialog_writeReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundcolor="#CABB11"
         android:text="리뷰 작성하기" />
 
     <Button

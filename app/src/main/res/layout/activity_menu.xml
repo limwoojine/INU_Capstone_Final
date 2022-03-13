@@ -20,14 +20,14 @@
             android:background="#E6CFCF">
 
             <ImageView
-                android:id="@+id/callimage"
-                android:layout_width="54dp"
-                android:layout_height="64dp"
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="84dp"
                 android:layout_marginEnd="4dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/store_number"
-                app:srcCompat="@drawable/call" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_call" />
 
             <TextView
                 android:id="@+id/store_name2"
@@ -45,12 +45,13 @@
                 android:id="@+id/store_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="44dp"
-                android:layout_marginEnd="132dp"
+                android:layout_marginEnd="112dp"
                 android:text="010-1234-1234"
                 android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/store_name2" />
+                app:layout_constraintTop_toBottomOf="@+id/store_name2"
+                app:layout_constraintVertical_bias="0.222" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 

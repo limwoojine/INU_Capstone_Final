@@ -22,7 +22,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var email : EditText
     private lateinit var pw : EditText
     private lateinit var repw : EditText
-    private lateinit var tel : EditText
     private lateinit var key : EditText
     private val correct = "inu.ac.kr"
 
@@ -34,7 +33,6 @@ class RegisterActivity : AppCompatActivity() {
         repw = findViewById(R.id.regi_repw)
         email = findViewById(R.id.regi_id)
         nickname = findViewById(R.id.regi_nickname)
-        tel = findViewById(R.id.regi_tel)
         key = findViewById(R.id.regi_key)
         val registerButton: Button = findViewById(R.id.regi_signupbutton)
         var check: TextView = findViewById(R.id.regi_pwok)
@@ -160,7 +158,7 @@ class RegisterActivity : AppCompatActivity() {
             showToastMsg(getString(R.string.msg_registered_email))
             Utility.focusEditText(this,email)
         }
-        else{
+        else {
             singUpCountDown.start()
             viewModel.verifiedEmailResponse(email.text.toString(),key.text.toString())
             viewModel.verifiedCode.observe(

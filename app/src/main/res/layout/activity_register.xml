@@ -93,17 +93,6 @@
         android:text="비밀번호가 일치하지 않습니다."
         android:textColor="#000000" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:text="전화번호 입력"
-        android:layout_marginTop="25dp" />
-    <EditText android:id="@+id/regi_tel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="전화번호 입력"
-        android:inputType="textPassword"/>
     <Button
         android:id="@+id/regi_signupbutton"
         android:layout_width="match_parent"

@@ -38,10 +38,9 @@
 
     <ImageButton
         android:id="@+id/camera_Button"
-        android:layout_width="98dp"
-        android:layout_height="92dp"
-        android:layout_marginLeft="10dp"
-        app:srcCompat="@drawable/camera" />
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
 
     <Button
         android:id="@+id/finish_Button"

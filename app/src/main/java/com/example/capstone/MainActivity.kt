@@ -7,11 +7,15 @@ import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.capstone.Login.App
+import com.example.capstone.Login.LoginViewModel
 import com.example.capstone.adapter.StoreAdapter
 import com.example.capstone.data.StoreData
 import com.google.android.material.navigation.NavigationView
@@ -24,12 +28,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var storeAdapter: StoreAdapter
 
     private lateinit var navigationView: NavigationView
     private lateinit var drawerLayout: DrawerLayout
     var data: StoreData? = null
-    var storeList: List<StoreData.Data>? = null
+
+    private val viewModel by viewModels<LoginViewModel>()
 
     private lateinit var recyclerView_store: RecyclerView
 
@@ -42,6 +46,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView = findViewById(R.id.main_navigationView)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
+
         setSupportActionBar(toolbar)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.navi_menu)
         supportActionBar?.setDisplayHomeAsUpEnabled(false) // 뒤로가기 버튼 활성화 여부
@@ -54,6 +59,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_login, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        //로그인 여부에 따른 메뉴 표시
+        loginCheck()
+        if(App.nowLogin) {
+            menu?.findItem(R.id.menu_login)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            menu?.findItem(R.id.menu_logout)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+            menu?.findItem(R.id.menu_memberInfo)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+            menu?.findItem(R.id.menu_review)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+            Log.d("로그인 정보", "${App.memberInfo}, ${App.nowLogin}")
+        } else {
+            menu?.findItem(R.id.menu_login)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+            menu?.findItem(R.id.menu_logout)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            menu?.findItem(R.id.menu_memberInfo)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            menu?.findItem(R.id.menu_review)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            Log.d("로그인 정보", "${App.memberInfo}, ${App.nowLogin}")
+        }
+        return super.onPrepareOptionsMenu(menu)
     }
 
     // Navigation 열리고 뒤로가기 눌렀을 때
@@ -71,6 +95,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
+            /*R.id.menu_logout -> {
+                App.memberInfo = null
+                App.nowLogin = false
+                Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+
+            }
+            R.id.menu_memberInfo -> {
+
+            }
+            R.id.menu_review -> {
+
+            }*/
         }
         return false
     }
@@ -81,6 +117,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
+            /*R.id.menu_logout -> {
+                App.memberInfo = null
+                Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+
+            }
+            R.id.menu_memberInfo -> {
+
+            }
+            R.id.menu_review -> {
+
+            }*/
         }
         return super.onOptionsItemSelected(item)
     }
@@ -122,4 +169,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recyclerView_store.setHasFixedSize(true)
     }
 
+    private fun loginCheck() {
+        if(App.nowLogin) {
+            if(App.memberInfo == null) {
+                viewModel.requestMemberInfo(App.prefs.token!!)
+                viewModel.memberInfo.observe(this, {
+                    App.memberInfo = it
+                })
+                Log.d("로그인 정보", "${App.memberInfo}, ${App.nowLogin}")
+            }
+        }
+    }
 }

@@ -10,5 +10,5 @@ interface RetrofitLogin {
     @FormUrlEncoded
     @POST("login")
     fun requestLogin(
-        @Body user : Map<String, String>): Call<LoginBody>
+        @Body jsonBody: LoginBody): Call<String>
 }

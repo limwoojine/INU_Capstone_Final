@@ -53,11 +53,14 @@ class MenuAdapter(private val foods: List<Menu.Data.FoodListDto>, private val co
             dialog.setButtonListener(object: MyDialog.SetButtonListener {
                 override fun readOnClicked() {
                     val intent = Intent(holder.itemView?.context, AllReviewActivity::class.java)
+                    intent.putExtra("food_id", items?.id)
+                    Log.d("food id", "${items?.id}")
                     startActivity(holder.itemView.context, intent, null)
                 }
 
                 override fun writeOnClicked() {
                     val intent = Intent(holder.itemView?.context, ReviewActivity::class.java)
+                    intent.putExtra("storeName", items?.name)
                     startActivity(holder.itemView.context, intent, null)
                 }
             })

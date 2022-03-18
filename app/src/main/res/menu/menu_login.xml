@@ -4,5 +4,18 @@
     >
     <item
         android:id="@+id/menu_login"
-        android:title="로그인"/>
+        android:title="로그인"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_logout"
+        android:title="로그아웃"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_memberInfo"
+        android:title="회원 정보"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_review"
+        android:title="리뷰 내역"
+        app:showAsAction="never"/>
 </menu>

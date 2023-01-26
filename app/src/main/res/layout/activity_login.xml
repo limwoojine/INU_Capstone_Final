@@ -39,6 +39,12 @@
         android:hint="비밀번호 입력"
         android:inputType="textPassword"/>
 
+    <CheckBox
+        android:id="@+id/onerCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="사장님 로그인" />
+
     <Button
         android:id="@+id/login_loginbutton"
         android:layout_width="match_parent"

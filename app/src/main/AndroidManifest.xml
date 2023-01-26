@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DIAL_PHONE" />
     <application
+        android:name=".Login.App"
         android:allowBackup="true"
         android:exported="true"
         android:icon="@mipmap/ic_launcher"

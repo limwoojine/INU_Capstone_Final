@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.content.Intent
 import android.util.Log
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -54,6 +55,9 @@ class LoginActivity : AppCompatActivity() {
                     }
                     else -> {
                         loginProcess()
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        showToastMsg("학생 로그인 완료")
                     }
                 }
             }

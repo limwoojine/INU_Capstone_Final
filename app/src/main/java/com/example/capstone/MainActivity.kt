@@ -19,6 +19,9 @@ import com.example.capstone.Login.LoginViewModel
 import com.example.capstone.adapter.StoreAdapter
 import com.example.capstone.data.StoreData
 import com.google.android.material.navigation.NavigationView
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,10 +29,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
 
 
-    private lateinit var navigationView: NavigationView
     private lateinit var drawerLayout: DrawerLayout
     var data: StoreData? = null
 
@@ -43,8 +45,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         recyclerView_store = findViewById(R.id.recyclerview_main)
         drawerLayout = findViewById(R.id.main_drawer_layout)
-        navigationView = findViewById(R.id.main_navigationView)
-
         val toolbar: Toolbar = findViewById(R.id.toolbar)
 
         setSupportActionBar(toolbar)
@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayHomeAsUpEnabled(false) // 뒤로가기 버튼 활성화 여부
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        navigationView.setNavigationItemSelectedListener(this)
         getStoreList()
     }
 
@@ -65,50 +64,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //로그인 여부에 따른 메뉴 표시
         loginCheck()
         if(App.nowLogin) {
-            menu?.findItem(R.id.menu_login)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-            menu?.findItem(R.id.menu_logout)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            menu?.findItem(R.id.menu_memberInfo)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            menu?.findItem(R.id.menu_review)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+            menu?.getItem(0)?.isEnabled = false
+            menu?.getItem(1)?.isEnabled = true
+            menu?.getItem(2)?.isEnabled = true
+            menu?.getItem(3)?.isEnabled = true
             Log.d("로그인 정보", "${App.memberInfo}, ${App.nowLogin}")
         } else {
-            menu?.findItem(R.id.menu_login)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            menu?.findItem(R.id.menu_logout)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-            menu?.findItem(R.id.menu_memberInfo)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-            menu?.findItem(R.id.menu_review)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            menu?.getItem(0)?.isEnabled = true
+            menu?.getItem(1)?.isEnabled = false
+            menu?.getItem(2)?.isEnabled = false
+            menu?.getItem(3)?.isEnabled = false
             Log.d("로그인 정보", "${App.memberInfo}, ${App.nowLogin}")
         }
         return super.onPrepareOptionsMenu(menu)
-    }
-
-    // Navigation 열리고 뒤로가기 눌렀을 때
-    override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item?.itemId) {
-            R.id.menu_login -> {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            }
-            /*R.id.menu_logout -> {
-                App.memberInfo = null
-                App.nowLogin = false
-                Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
-
-            }
-            R.id.menu_memberInfo -> {
-
-            }
-            R.id.menu_review -> {
-
-            }*/
-        }
-        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -117,11 +85,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
-            /*R.id.menu_logout -> {
+            R.id.menu_logout -> {
                 App.memberInfo = null
+                App.nowLogin = false
                 Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
 
             }
+            /*
             R.id.menu_memberInfo -> {
 
             }
@@ -134,7 +104,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun getStoreList() {
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://da86-125-180-55-163.ngrok.io/")
+            .baseUrl("https://473d-125-180-55-163.ngrok.io/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val retrofitService = retrofit.create(RetrofitAPI1::class.java)

@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginServiceCreator {
 
-    private val BASE_URL = "https://da86-125-180-55-163.ngrok.io/"
+    private val BASE_URL = "https://473d-125-180-55-163.ngrok.io/"
     private val client : LoginService
 
     val gson = GsonBuilder().setLenient().create()
@@ -68,10 +68,10 @@ class LoginServiceCreator {
                         val convertedBody = serverErrorConverter.convert(errorBody) */
                         val convertedBody = loginErrorConverter.convert(errorBody)
                         Log.e("errorBody() message is ", "${convertedBody?.message}" )
-                          //if (convertedBody?.message == "가입되지 않은 E-MAIL 입니다."){
-                          //    livedata.value = "not registered email"
-                          //}else if (convertedBody?.message == "잘못된 비밀번호입니다."){
-                          //    livedata.value = "incorrect password"
+                        //if (convertedBody?.message == "가입되지 않은 E-MAIL 입니다."){
+                        //    livedata.value = "not registered email"
+                        //}else if (convertedBody?.message == "잘못된 비밀번호입니다."){
+                        //    livedata.value = "incorrect password"
                         //}
                         when(convertedBody?.message){
                             "가입되지 않은 E-MAIL 입니다." -> {
